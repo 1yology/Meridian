@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meridian Biostatistics — precision biostatistics, research design, and evidence synthesis for physicians, residents, and academic researchers." />
+  <meta name="theme-color" content="#0a1f3d" />
+  <title>Meridian Biostatistics — Precision in Evidence</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='8' fill='%230a1f3d'/><circle cx='20' cy='20' r='14' fill='none' stroke='%23f7f5f0' stroke-width='1.2'/><path d='M8 24 L14 18 L20 22 L26 14 L32 20' fill='none' stroke='%232eb1b3' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/><circle cx='20' cy='22' r='1.6' fill='%23f7f5f0'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================================
+       MERIDIAN BIOSTATISTICS — Design System
+       Editorial / academic aesthetic.
+       Display: Fraunces (serif). Body: Inter Tight. Mono: JetBrains Mono.
+       ===================================================================== */
+
+    :root {
+      /* --- Palette ---------------------------------------------------- */
+      --ink:        #0a1f3d;     /* deep navy — primary */
+      --ink-2:      #122c52;     /* navy-2 for layering */
+      --ink-soft:   #2a3f60;
+      --teal:       #0f8b8d;     /* secondary accent */
+      --teal-light: #2eb1b3;
+      --bone:       #f7f5f0;     /* warm paper */
+      --paper:      #fbfaf6;
+      --paper-2:    #ffffff;
+      --rule:       #e6e2d8;     /* hairline rule */
+      --rule-soft:  #ece8de;
+      --muted:      #5b6577;
+      --muted-2:    #8a8f9a;
+      --gold:       #b08a3e;     /* editorial accent for marks */
+
+      /* --- Type ------------------------------------------------------- */
+      --serif: 'Fraunces', 'Iowan Old Style', 'Georgia', serif;
+      --sans:  'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+      --mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+      /* --- Layout ----------------------------------------------------- */
+      --maxw: 1240px;
+      --gutter: clamp(1.25rem, 3vw, 2.5rem);
+      --section-y: clamp(5rem, 10vw, 8rem);
+
+      /* --- Motion ----------------------------------------------------- */
+      --ease: cubic-bezier(.2, .7, .2, 1);
+    }
+
+    /* ===== Reset ============================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    /* ===== Selection / Focus ================================== */
+    ::selection { background: var(--ink); color: var(--paper); }
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+
+    /* =====================================================================
+       NAVIGATION
+       ===================================================================== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(251, 250, 246, .82);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s var(--ease), background .3s var(--ease);
+    }
+    .nav.is-scrolled {
+      border-bottom-color: var(--rule);
+      background: rgba(251, 250, 246, .94);
+    }
+    .nav__inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 1rem var(--gutter);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav__brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      color: var(--ink);
+    }
+    .logo { width: 32px; height: 32px; color: var(--ink); flex-shrink: 0; }
+    .logo--lg { width: 44px; height: 44px; }
+    .nav__wordmark { display: flex; flex-direction: column; line-height: 1; }
+    .nav__name {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: -.01em;
+    }
+    .nav__sub {
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .nav__menu {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .nav__menu a {
+      font-size: .92rem;
+      color: var(--ink-soft);
+      position: relative;
+      padding: .25rem 0;
+      transition: color .25s var(--ease);
+    }
+    .nav__menu a::after {
+      content: '';
+      position: absolute;
+      inset: auto 50% -2px;
+      width: 0;
+      height: 1px;
+      background: var(--ink);
+      transition: inset .3s var(--ease), width .3s var(--ease);
+    }
+    .nav__menu a:hover { color: var(--ink); }
+    .nav__menu a:hover::after { inset: auto 0 -2px; width: 100%; }
+
+    .nav__cta {
+      font-size: .88rem;
+      font-weight: 500;
+      padding: .65rem 1.1rem;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 999px;
+      transition: background .25s var(--ease), transform .25s var(--ease);
+      white-space: nowrap;
+    }
+    .nav__cta:hover { background: var(--teal); transform: translateY(-1px); }
+
+    .nav__burger {
+      display: none;
+      width: 36px;
+      height: 36px;
+      position: relative;
+    }
+    .nav__burger span {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      height: 1.4px;
+      background: var(--ink);
+      transition: transform .3s var(--ease), opacity .3s var(--ease), top .3s var(--ease);
+    }
+    .nav__burger span:nth-child(1) { top: 12px; }
+    .nav__burger span:nth-child(2) { top: 17px; }
+    .nav__burger span:nth-child(3) { top: 22px; }
+    .nav__burger[aria-expanded="true"] span:nth-child(1) { top: 17px; transform: rotate(45deg); }
+    .nav__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav__burger[aria-expanded="true"] span:nth-child(3) { top: 17px; transform: rotate(-45deg); }
+
+    /* =====================================================================
+       BUTTONS
+       ===================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      padding: .95rem 1.5rem;
+      font-size: .95rem;
+      font-weight: 500;
+      letter-spacing: .005em;
+      border-radius: 999px;
+      transition: all .3s var(--ease);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn svg { width: 16px; height: 16px; transition: transform .3s var(--ease); }
+    .btn:hover svg { transform: translateX(3px); }
+    .btn--primary {
+      background: var(--ink);
+      color: var(--paper);
+      box-shadow: 0 1px 0 rgba(255,255,255,.1) inset, 0 8px 24px -12px rgba(10, 31, 61, .55);
+    }
+    .btn--primary:hover {
+      background: var(--teal);
+      box-shadow: 0 1px 0 rgba(255,255,255,.15) inset, 0 12px 28px -10px rgba(15, 139, 141, .55);
+      transform: translateY(-1px);
+    }
+    .btn--ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+    }
+    .btn--ghost:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn--full { width: 100%; justify-content: center; }
+
+    /* =====================================================================
+       HERO
+       ===================================================================== */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 70px);
+      padding: clamp(3rem, 7vw, 6rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(15, 139, 141, .06), transparent 60%),
+        radial-gradient(900px 500px at -10% 110%, rgba(10, 31, 61, .07), transparent 60%),
+        var(--paper);
+      overflow: hidden;
+    }
+    .hero__canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .hero__veil {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(251, 250, 246, 0) 0%, rgba(251, 250, 246, .35) 70%, rgba(251, 250, 246, .85) 100%);
+      pointer-events: none;
+    }
+    .hero__inner {
+      position: relative;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      z-index: 2;
+    }
+
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      padding: .45rem .9rem;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,.6);
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .hero__eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 0 rgba(15, 139, 141, .6);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(15, 139, 141, .55); }
+      50%      { box-shadow: 0 0 0 8px rgba(15, 139, 141, 0); }
+    }
+
+    .hero__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.6rem, 6.5vw, 5.6rem);
+      line-height: 1.02;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin: 0 0 1.75rem;
+      max-width: 16ch;
+    }
+    .hero__title .serif { font-weight: 400; }
+    .hero__title .italic {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink-soft);
+    }
+
+    .hero__lede {
+      max-width: 56ch;
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      color: var(--ink-soft);
+      line-height: 1.65;
+      margin: 0 0 2.25rem;
+    }
+
+    .hero__cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .85rem;
+      margin-bottom: 4rem;
+    }
+
+    .hero__stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin: 0;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+    .hero__stats > div { display: flex; flex-direction: column-reverse; gap: .35rem; }
+    .hero__stats dt {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .hero__stats dd {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      font-weight: 400;
+      letter-spacing: -.01em;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 1.5rem;
+      right: var(--gutter);
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 2;
+    }
+    .hero__scroll-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ink) 50%, transparent);
+      background-size: 200% 100%;
+      animation: slide 2.4s ease-in-out infinite;
+    }
+    @keyframes slide {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    /* =====================================================================
+       MARQUEE
+       ===================================================================== */
+    .marquee {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1.1rem 0;
+      overflow: hidden;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .marquee__track {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      white-space: nowrap;
+      animation: marquee 50s linear infinite;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.15rem;
+      font-weight: 300;
+    }
+    .marquee__track .bullet { color: var(--teal-light); font-style: normal; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* =====================================================================
+       SECTION SHELL
+       ===================================================================== */
+    .section {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: var(--section-y) var(--gutter);
+    }
+    .section__head { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+    .section__index {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    .section__index::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: .8rem;
+      height: 1px;
+      background: var(--gold);
+    }
+    .section__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3.6rem);
+      line-height: 1.1;
+      letter-spacing: -.015em;
+      color: var(--ink);
+      margin: 0;
+      max-width: 22ch;
+    }
+    .section__title .italic { font-style: italic; font-weight: 300; color: var(--ink-soft); }
+    .section__sub {
+      margin-top: 1rem;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    /* =====================================================================
+       ABOUT
+       ===================================================================== */
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+    }
+    .about__lead p {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+      line-height: 1.55;
+      color: var(--ink);
+      margin: 0 0 1.25rem;
+    }
+    .about__lead p:first-child::first-letter {
+      font-size: 3.5em;
+      font-weight: 400;
+      float: left;
+      line-height: 1;
+      margin: .05em .15em -.05em 0;
+      color: var(--teal);
+    }
+    .about__pillars { display: flex; flex-direction: column; gap: 1.25rem; }
+    .pillar {
+      padding: 1.5rem;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--paper-2);
+      transition: transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .pillar:hover {
+      transform: translateY(-2px);
+      border-color: var(--ink);
+      box-shadow: 0 12px 32px -16px rgba(10, 31, 61, .15);
+    }
+    .pillar header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .75rem; }
+    .pillar__num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .pillar h3 { font-family: var(--serif); font-weight: 500; font-size: 1.15rem; margin: 0; letter-spacing: -.005em; }
+    .pillar p { color: var(--muted); margin: 0; font-size: .95rem; line-height: 1.6; }
+    .pillar ul { display: flex; flex-direction: column; gap: .35rem; }
+    .pillar ul li { color: var(--muted); font-size: .92rem; padding-left: 1rem; position: relative; }
+    .pillar ul li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: .65em;
+      width: 6px; height: 1px;
+      background: var(--gold);
+    }
+
+    /* =====================================================================
+       SERVICES
+       ===================================================================== */
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+    }
+    .service {
+      padding: 2.25rem;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      transition: background .35s var(--ease);
+      background: var(--paper);
+    }
+    .service:hover { background: var(--paper-2); }
+    .service__num {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+    .service h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.4rem;
+      letter-spacing: -.01em;
+      line-height: 1.25;
+      margin: 0 0 .75rem;
+      color: var(--ink);
+    }
+    .service p {
+      color: var(--muted);
+      font-size: .95rem;
+      margin: 0 0 1.5rem;
+      line-height: 1.65;
+    }
+    .service__tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .service__tools span {
+      font-family: var(--mono);
+      font-size: .7rem;
+      padding: .25rem .55rem;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--ink-soft);
+      background: rgba(255,255,255,.5);
+    }
+
+    /* =====================================================================
+       WORKFLOW
+       ===================================================================== */
+    .workflow__list {
+      display: flex;
+      flex-direction: column;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--rule);
+      align-items: start;
+      transition: padding .35s var(--ease);
+      position: relative;
+    }
+    .step:last-child { border-bottom: 1px solid var(--rule); }
+    .step::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 1px;
+      background: var(--ink);
+      transition: width .5s var(--ease);
+    }
+    .step:hover::before { width: 100%; }
+    .step:hover { padding-left: 1rem; }
+    .step__num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 2.4rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .step__body h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.5rem;
+      letter-spacing: -.01em;
+      margin: 0 0 .5rem;
+      color: var(--ink);
+    }
+    .step__body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 65ch;
+      line-height: 1.65;
+    }
+    .step__meta {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      white-space: nowrap;
+      padding-top: .5rem;
+    }
+
+    /* =====================================================================
+       PRICING
+       ===================================================================== */
+    .pricing__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+    .tier {
+      position: relative;
+      padding: 2.25rem 2rem;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      transition: transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+    }
+    .tier:hover {
+      transform: translateY(-3px);
+      border-color: var(--ink);
+      box-shadow: 0 18px 40px -20px rgba(10, 31, 61, .2);
+    }
+    .tier--featured {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+    .tier--featured:hover { box-shadow: 0 22px 50px -16px rgba(10, 31, 61, .45); }
+    .tier--featured .tier__head h3,
+    .tier--featured .tier__amt,
+    .tier--featured .tier__list li { color: var(--paper); }
+    .tier--featured .tier__head p,
+    .tier--featured .tier__from,
+    .tier--featured .tier__per { color: rgba(247, 245, 240, .65); }
+    .tier--featured .tier__list li::before { background: var(--teal-light); }
+
+    .tier__badge {
+      position: absolute;
+      top: -10px;
+      right: 1.5rem;
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--ink);
+      padding: .3rem .7rem;
+      border-radius: 3px;
+    }
+    .tier__head { margin-bottom: 1.5rem; }
+    .tier__head h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.6rem;
+      margin: 0 0 .35rem;
+      letter-spacing: -.01em;
+    }
+    .tier__head p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .tier__price {
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+      gap: .15rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--rule-soft);
+      border-bottom: 1px solid var(--rule-soft);
+      margin-bottom: 1.5rem;
+    }
+    .tier--featured .tier__price { border-color: rgba(247, 245, 240, .12); }
+    .tier__from {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tier__amt {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 2.6rem;
+      line-height: 1;
+      letter-spacing: -.02em;
+      color: var(--ink);
+    }
+    .tier__per {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    .tier__list { display: flex; flex-direction: column; gap: .65rem; margin-bottom: 1.75rem; flex-grow: 1; }
+    .tier__list li {
+      font-size: .92rem;
+      color: var(--ink-soft);
+      padding-left: 1.4rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .tier__list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: .55em;
+      width: 8px; height: 1px;
+      background: var(--teal);
+    }
+    .pricing__note {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-style: italic;
+      color: var(--muted);
+      font-size: .9rem;
+      max-width: 70ch;
+      margin-inline: auto;
+    }
+
+    /* =====================================================================
+       PORTFOLIO
+       ===================================================================== */
+    .portfolio__list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .case {
+      padding: 2rem;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      transition: transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+    }
+    .case:hover {
+      transform: translateY(-2px);
+      border-color: var(--teal);
+      box-shadow: 0 14px 36px -18px rgba(15, 139, 141, .25);
+    }
+    .case__tag {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1rem;
+    }
+    .case h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.35rem;
+      letter-spacing: -.01em;
+      line-height: 1.3;
+      margin: 0 0 .85rem;
+      color: var(--ink);
+    }
+    .case p { color: var(--muted); font-size: .95rem; margin: 0 0 1.25rem; line-height: 1.65; }
+    .case__stack { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .case__stack span {
+      font-family: var(--mono);
+      font-size: .7rem;
+      padding: .22rem .55rem;
+      background: var(--bone);
+      border-radius: 3px;
+      color: var(--ink-soft);
+    }
+
+    /* =====================================================================
+       TESTIMONIALS
+       ===================================================================== */
+    .testimonials { background: linear-gradient(180deg, transparent, rgba(15, 139, 141, .03)); }
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .quote {
+      margin: 0;
+      padding: 2rem;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      position: relative;
+    }
+    .quote::before {
+      content: '\201C';
+      position: absolute;
+      top: -10px;
+      left: 1.5rem;
+      font-family: var(--serif);
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--teal);
+      font-weight: 400;
+    }
+    .quote blockquote { margin: 0; padding-top: .5rem; }
+    .quote blockquote p {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--ink);
+      margin: 0;
+      font-style: italic;
+    }
+    .quote figcaption {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule-soft);
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+    }
+    .quote__name { font-weight: 500; color: var(--ink); font-size: .9rem; }
+    .quote__meta { font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .05em; }
+
+    /* =====================================================================
+       FAQ
+       ===================================================================== */
+    .faq__list {
+      border-top: 1px solid var(--rule);
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .faq__item {
+      border-bottom: 1px solid var(--rule);
+    }
+    .faq__item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: -.005em;
+      color: var(--ink);
+      transition: color .25s var(--ease);
+    }
+    .faq__item summary::-webkit-details-marker { display: none; }
+    .faq__item summary:hover { color: var(--teal); }
+    .faq__icon {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+    .faq__icon::before, .faq__icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      transition: transform .35s var(--ease);
+    }
+    .faq__icon::before { left: 0; right: 0; top: 50%; height: 1px; transform: translateY(-.5px); }
+    .faq__icon::after  { top: 0; bottom: 0; left: 50%; width: 1px; transform: translateX(-.5px); }
+    .faq__item[open] .faq__icon::after { transform: translateX(-.5px) rotate(90deg); }
+    .faq__a {
+      padding: 0 0 1.75rem;
+      max-width: 70ch;
+    }
+    .faq__a p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* =====================================================================
+       CONTACT
+       ===================================================================== */
+    .contact {
+      background: var(--ink);
+      color: var(--paper);
+      max-width: none;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(800px 400px at 90% 10%, rgba(15, 139, 141, .25), transparent 60%),
+        radial-gradient(600px 400px at 10% 90%, rgba(176, 138, 62, .12), transparent 60%);
+      pointer-events: none;
+    }
+    .contact__inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 6vw, 6rem);
+      position: relative;
+      z-index: 1;
+    }
+    .contact .section__index { color: var(--teal-light); }
+    .contact .section__index::before { background: var(--teal-light); }
+    .contact .section__title { color: var(--paper); }
+    .contact .section__title .italic { color: rgba(247, 245, 240, .6); }
+    .contact__intro > p {
+      margin-top: 1.25rem;
+      color: rgba(247, 245, 240, .75);
+      font-size: 1.05rem;
+      max-width: 50ch;
+    }
+    .contact__meta {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(247, 245, 240, .12);
+    }
+    .contact__meta li { display: flex; gap: 1.25rem; align-items: baseline; flex-wrap: wrap; }
+    .contact__label {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(247, 245, 240, .5);
+      min-width: 100px;
+    }
+    .contact__meta a { color: var(--teal-light); transition: color .25s var(--ease); }
+    .contact__meta a:hover { color: var(--paper); }
+
+    .contact__whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      margin-top: 2rem;
+      padding: .8rem 1.2rem;
+      background: rgba(247, 245, 240, .06);
+      border: 1px solid rgba(247, 245, 240, .15);
+      border-radius: 999px;
+      color: var(--paper);
+      font-size: .9rem;
+      transition: all .3s var(--ease);
+    }
+    .contact__whatsapp em { color: rgba(247, 245, 240, .55); font-style: italic; font-size: .82rem; }
+    .contact__whatsapp:hover { background: rgba(15, 139, 141, .25); border-color: var(--teal-light); }
+
+    .contact__form {
+      background: rgba(247, 245, 240, .03);
+      border: 1px solid rgba(247, 245, 240, .12);
+      padding: 2rem;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      backdrop-filter: blur(10px);
+    }
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+    .field label {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(247, 245, 240, .65);
+    }
+    .field .optional { text-transform: none; letter-spacing: 0; color: rgba(247, 245, 240, .4); font-style: italic; }
+    .field input, .field select, .field textarea {
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(247, 245, 240, .25);
+      padding: .65rem 0;
+      color: var(--paper);
+      font-family: var(--sans);
+      font-size: .98rem;
+      transition: border-color .25s var(--ease);
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(247, 245, 240, .35); }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: 0;
+      border-bottom-color: var(--teal-light);
+    }
+    .field textarea { resize: vertical; min-height: 110px; }
+    .field select { background: var(--ink); cursor: pointer; }
+    .field--check { flex-direction: row; align-items: center; gap: .65rem; }
+    .field--check input { width: 16px; height: 16px; accent-color: var(--teal); }
+    .field--check label { text-transform: none; letter-spacing: 0; font-family: var(--sans); font-size: .9rem; color: rgba(247, 245, 240, .8); }
+
+    .contact__form .btn--primary {
+      background: var(--paper);
+      color: var(--ink);
+      margin-top: .5rem;
+    }
+    .contact__form .btn--primary:hover { background: var(--teal-light); color: var(--ink); }
+
+    .form__note {
+      font-family: var(--mono);
+      font-size: .75rem;
+      text-align: center;
+      margin: 0;
+      color: var(--teal-light);
+      min-height: 1em;
+    }
+
+    /* =====================================================================
+       FOOTER
+       ===================================================================== */
+    .footer {
+      background: var(--bone);
+      border-top: 1px solid var(--rule);
+      padding: 4rem var(--gutter) 2rem;
+    }
+    .footer__top {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .footer__brand .logo { color: var(--ink); margin-bottom: 1rem; }
+    .footer__brand h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.4rem;
+      letter-spacing: -.01em;
+      margin: 0 0 .35rem;
+      color: var(--ink);
+    }
+    .footer__brand p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      margin: 0;
+      max-width: 35ch;
+    }
+    .footer__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .footer__cols h4 {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      margin: 0 0 1rem;
+    }
+    .footer__cols a {
+      display: block;
+      font-size: .92rem;
+      color: var(--ink-soft);
+      padding: .25rem 0;
+      transition: color .25s var(--ease);
+    }
+    .footer__cols a:hover { color: var(--teal); }
+
+    .footer__bottom {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer__bottom p { margin: 0; font-size: .85rem; color: var(--muted); }
+    .footer__fineprint { font-style: italic; }
+
+    /* =====================================================================
+       REVEAL ANIMATION
+       ===================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease);
+      transition-delay: var(--d, 0s);
+    }
+    .reveal.is-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* =====================================================================
+       RESPONSIVE
+       ===================================================================== */
+    @media (max-width: 1024px) {
+      .nav__menu { gap: 1.25rem; }
+      .nav__menu a { font-size: .88rem; }
+      .services__grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing__grid { grid-template-columns: 1fr; }
+      .about__grid { grid-template-columns: 1fr; }
+      .contact__inner { grid-template-columns: 1fr; }
+      .hero__stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    }
+
+    @media (max-width: 720px) {
+      .nav__inner { grid-template-columns: auto auto; }
+      .nav__menu {
+        position: fixed;
+        inset: 70px 0 auto 0;
+        flex-direction: column;
+        background: var(--paper);
+        padding: 2rem var(--gutter);
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--rule);
+        transform: translateY(-110%);
+        transition: transform .4s var(--ease);
+        z-index: 49;
+        align-items: flex-start;
+      }
+      .nav__menu.is-open { transform: translateY(0); }
+      .nav__menu a { font-size: 1.4rem; font-family: var(--serif); }
+      .nav__cta { display: none; }
+      .nav__burger { display: block; justify-self: end; }
+
+      .hero__title { font-size: clamp(2.4rem, 9vw, 3.8rem); max-width: 100%; }
+      .hero__stats { grid-template-columns: 1fr 1fr; gap: 1.25rem; padding-top: 1.5rem; }
+      .hero__scroll { display: none; }
+
+      .services__grid { grid-template-columns: 1fr; }
+      .portfolio__list { grid-template-columns: 1fr; }
+      .testimonials__grid { grid-template-columns: 1fr; }
+
+      .step { grid-template-columns: 50px 1fr; gap: 1rem; padding: 1.5rem 0; }
+      .step__meta { grid-column: 2; padding-top: 0; }
+      .step__num { font-size: 2rem; }
+      .step__body h3 { font-size: 1.25rem; }
+
+      .footer__top { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer__cols { grid-template-columns: repeat(2, 1fr); }
+      .footer__bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 420px) {
+      .hero__cta { flex-direction: column; align-items: stretch; }
+      .hero__cta .btn { justify-content: center; }
+      .hero__stats { grid-template-columns: 1fr; }
+    }
+
+    /* =====================================================================
+       REDUCED MOTION
+       ===================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      .marquee__track { animation: none; }
+      .hero__canvas { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__brand" aria-label="Meridian Biostatistics, home">
+        <svg class="logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 24 L14 16 L20 22 L26 12 L34 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="20" cy="22" r="1.6" fill="currentColor"/>
+        </svg>
+        <div class="nav__wordmark">
+          <span class="nav__name">Meridian</span>
+          <span class="nav__sub">Biostatistics</span>
+        </div>
+      </a>
+
+      <nav class="nav__menu" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#workflow">Process</a>
+        <a href="#pricing">Engagements</a>
+        <a href="#portfolio">Work</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a href="#contact" class="nav__cta">Request consultation</a>
+
+      <button class="nav__burger" aria-label="Toggle menu" aria-expanded="false" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <canvas class="hero__canvas" id="dataCanvas" aria-hidden="true"></canvas>
+      <div class="hero__veil" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <div class="hero__eyebrow reveal">
+          <span class="dot"></span>
+          <span>Established research consultancy &nbsp;·&nbsp; Confidential engagements</span>
+        </div>
+
+        <h1 class="hero__title reveal" style="--d:.05s">
+          <span class="serif">Precision</span>
+          <span class="italic">in evidence,</span>
+          <span class="serif">rigour</span>
+          <span class="italic">in every figure.</span>
+        </h1>
+
+        <p class="hero__lede reveal" style="--d:.15s">
+          Meridian partners with clinicians, residents, and academic teams to design defensible studies,
+          interpret complex data, and prepare manuscripts that withstand peer review. Every analysis is
+          documented, reproducible, and led by a senior biostatistician.
+        </p>
+
+        <div class="hero__cta reveal" style="--d:.25s">
+          <a href="#contact" class="btn btn--primary">
+            Request consultation
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#services" class="btn btn--ghost">View services</a>
+        </div>
+
+        <dl class="hero__stats reveal" style="--d:.4s">
+          <div>
+            <dt>Studies supported</dt>
+            <dd><span data-count="640">0</span>+</dd>
+          </div>
+          <div>
+            <dt>Peer-reviewed publications</dt>
+            <dd><span data-count="180">0</span>+</dd>
+          </div>
+          <div>
+            <dt>Disciplines covered</dt>
+            <dd><span data-count="22">0</span></dd>
+          </div>
+          <div>
+            <dt>Median turnaround</dt>
+            <dd>5 days</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <span class="hero__scroll-line"></span>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <section class="marquee" aria-label="Affiliations and methods">
+      <div class="marquee__track">
+        <span>Cohort studies</span><span class="bullet">&bull;</span>
+        <span>Randomised trials</span><span class="bullet">&bull;</span>
+        <span>Survival analysis</span><span class="bullet">&bull;</span>
+        <span>Bayesian inference</span><span class="bullet">&bull;</span>
+        <span>Mixed-effects models</span><span class="bullet">&bull;</span>
+        <span>PRISMA 2020</span><span class="bullet">&bull;</span>
+        <span>STROBE</span><span class="bullet">&bull;</span>
+        <span>CONSORT</span><span class="bullet">&bull;</span>
+        <span>Propensity scoring</span><span class="bullet">&bull;</span>
+        <span>Meta-regression</span><span class="bullet">&bull;</span>
+        <span>Cohort studies</span><span class="bullet">&bull;</span>
+        <span>Randomised trials</span><span class="bullet">&bull;</span>
+        <span>Survival analysis</span><span class="bullet">&bull;</span>
+        <span>Bayesian inference</span><span class="bullet">&bull;</span>
+        <span>Mixed-effects models</span><span class="bullet">&bull;</span>
+        <span>PRISMA 2020</span><span class="bullet">&bull;</span>
+        <span>STROBE</span><span class="bullet">&bull;</span>
+        <span>CONSORT</span><span class="bullet">&bull;</span>
+        <span>Propensity scoring</span><span class="bullet">&bull;</span>
+        <span>Meta-regression</span><span class="bullet">&bull;</span>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
+      <div class="section__head">
+        <span class="section__index">01</span>
+        <h2 class="section__title"><span class="serif">About</span> <span class="italic">the practice</span></h2>
+      </div>
+
+      <div class="about__grid">
+        <div class="about__lead reveal">
+          <p>
+            Meridian Biostatistics is a specialist research consultancy serving the medical and life-sciences
+            community. We embed alongside clinical teams, residents, and faculty to translate ambitious
+            research questions into rigorous, publishable evidence.
+          </p>
+          <p>
+            Our work is grounded in three principles: methodological rigour, transparent documentation,
+            and absolute confidentiality. We do not outsource. Every project is led by a senior statistician
+            with peer-review experience.
+          </p>
+        </div>
+
+        <div class="about__pillars">
+          <article class="pillar reveal" style="--d:.05s">
+            <header>
+              <span class="pillar__num">M</span>
+              <h3>Mission</h3>
+            </header>
+            <p>To raise the methodological standard of clinical research through accessible, principled, and reproducible statistical practice.</p>
+          </article>
+
+          <article class="pillar reveal" style="--d:.15s">
+            <header>
+              <span class="pillar__num">V</span>
+              <h3>Vision</h3>
+            </header>
+            <p>A research ecosystem where every published figure is defensible, every method pre-specified, and every dataset honoured by the analysis it deserves.</p>
+          </article>
+
+          <article class="pillar reveal" style="--d:.25s">
+            <header>
+              <span class="pillar__num">P</span>
+              <h3>Principles</h3>
+            </header>
+            <ul>
+              <li>Pre-registered analysis plans</li>
+              <li>Reproducible code, version-controlled</li>
+              <li>Encrypted data handling, NDAs on request</li>
+              <li>Plain-language interpretation alongside output</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="section services" id="services">
+      <div class="section__head">
+        <span class="section__index">02</span>
+        <h2 class="section__title"><span class="serif">Services</span> <span class="italic">we deliver</span></h2>
+        <p class="section__sub">End-to-end support across the research lifecycle &mdash; from protocol to publication.</p>
+      </div>
+
+      <div class="services__grid">
+
+        <article class="service reveal">
+          <div class="service__num">01</div>
+          <h3>Study Design Consultation</h3>
+          <p>Hypothesis framing, sample-size calculation, randomisation strategy, and protocol drafting aligned with CONSORT, STROBE, and SPIRIT reporting standards.</p>
+          <div class="service__tools">
+            <span>G*Power</span><span>PASS</span><span>R</span>
+          </div>
+        </article>
+
+        <article class="service reveal" style="--d:.05s">
+          <div class="service__num">02</div>
+          <h3>Statistical Analysis</h3>
+          <p>From descriptive summaries to mixed-effects, survival, and Bayesian modelling. Every output is accompanied by an interpretive memo suitable for manuscript inclusion.</p>
+          <div class="service__tools">
+            <span>R</span><span>SPSS</span><span>Python</span><span>Stata</span>
+          </div>
+        </article>
+
+        <article class="service reveal" style="--d:.1s">
+          <div class="service__num">03</div>
+          <h3>Data Cleaning &amp; Management</h3>
+          <p>Audit-ready data preparation: deduplication, recoding, outlier diagnostics, missingness analysis, and harmonisation across sources, with a full provenance log.</p>
+          <div class="service__tools">
+            <span>R / tidyverse</span><span>Python / pandas</span><span>REDCap</span>
+          </div>
+        </article>
+
+        <article class="service reveal" style="--d:.15s">
+          <div class="service__num">04</div>
+          <h3>Systematic Review &amp; Meta-analysis</h3>
+          <p>Protocol registration, search-strategy design, dual screening, risk-of-bias assessment, and quantitative synthesis with heterogeneity and publication-bias diagnostics.</p>
+          <div class="service__tools">
+            <span>PRISMA 2020</span><span>Rayyan</span><span>RevMan</span><span>R / metafor</span>
+          </div>
+        </article>
+
+        <article class="service reveal" style="--d:.2s">
+          <div class="service__num">05</div>
+          <h3>Manuscript Statistical Review</h3>
+          <p>Pre-submission audit of methods, results, and figures. We identify reporting gaps reviewers will flag, and we draft revised text that strengthens your statistical narrative.</p>
+          <div class="service__tools">
+            <span>ICMJE</span><span>EQUATOR</span><span>Journal-specific</span>
+          </div>
+        </article>
+
+        <article class="service reveal" style="--d:.25s">
+          <div class="service__num">06</div>
+          <h3>Thesis &amp; Dissertation Support</h3>
+          <p>Methodology chapters, analysis pipelines, and viva-ready defence preparation for masters and doctoral candidates in clinical and translational research.</p>
+          <div class="service__tools">
+            <span>R</span><span>SPSS</span><span>LaTeX</span><span>Quarto</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ WORKFLOW ============ -->
+    <section class="section workflow" id="workflow">
+      <div class="section__head">
+        <span class="section__index">03</span>
+        <h2 class="section__title"><span class="serif">A measured</span> <span class="italic">process.</span></h2>
+        <p class="section__sub">Predictable, transparent, and documented at every stage.</p>
+      </div>
+
+      <ol class="workflow__list">
+        <li class="step reveal">
+          <div class="step__num">01</div>
+          <div class="step__body">
+            <h3>Submit Request</h3>
+            <p>Share your research question, data summary, and timeline through our intake form or a brief email. Confidentiality is presumed; NDAs are issued on request.</p>
+          </div>
+          <div class="step__meta">~ 1 day</div>
+        </li>
+
+        <li class="step reveal" style="--d:.07s">
+          <div class="step__num">02</div>
+          <div class="step__body">
+            <h3>Initial Consultation</h3>
+            <p>A 30-minute scoping call to align on objectives, candidate methods, deliverables, and a fixed engagement schedule. You receive a written proposal within 24 hours.</p>
+          </div>
+          <div class="step__meta">30 min</div>
+        </li>
+
+        <li class="step reveal" style="--d:.14s">
+          <div class="step__num">03</div>
+          <div class="step__body">
+            <h3>Data Review</h3>
+            <p>Structured data audit: variable inventory, missingness, coding integrity, and assumption diagnostics. You receive a brief data-quality memo before analysis begins.</p>
+          </div>
+          <div class="step__meta">2&ndash;4 days</div>
+        </li>
+
+        <li class="step reveal" style="--d:.21s">
+          <div class="step__num">04</div>
+          <div class="step__body">
+            <h3>Analysis &amp; Reporting</h3>
+            <p>Pre-specified analysis is executed in versioned code. You receive publication-grade tables, figures, and a methods paragraph drafted for direct insertion into your manuscript.</p>
+          </div>
+          <div class="step__meta">5&ndash;14 days</div>
+        </li>
+
+        <li class="step reveal" style="--d:.28s">
+          <div class="step__num">05</div>
+          <div class="step__body">
+            <h3>Revisions &amp; Final Delivery</h3>
+            <p>Two rounds of revisions are included as standard. Final delivery includes annotated code, a reproducibility README, and a 30-day support window for reviewer responses.</p>
+          </div>
+          <div class="step__meta">As needed</div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ PRICING ============ -->
+    <section class="section pricing" id="pricing">
+      <div class="section__head">
+        <span class="section__index">04</span>
+        <h2 class="section__title"><span class="serif">Engagement</span> <span class="italic">tiers.</span></h2>
+        <p class="section__sub">Flat-rate engagements scoped to the depth of analysis required. Custom retainers available for ongoing programmes.</p>
+      </div>
+
+      <div class="pricing__grid">
+
+        <article class="tier reveal">
+          <header class="tier__head">
+            <h3>Essential</h3>
+            <p>For focused, single-question projects</p>
+          </header>
+          <div class="tier__price">
+            <span class="tier__from">From</span>
+            <span class="tier__amt">$$</span>
+            <span class="tier__per">per engagement</span>
+          </div>
+          <ul class="tier__list">
+            <li>Sample-size calculation</li>
+            <li>Descriptive &amp; bivariate analysis</li>
+            <li>One results table, one figure</li>
+            <li>Methods paragraph drafted</li>
+            <li>One round of revisions</li>
+          </ul>
+          <a href="#contact" class="btn btn--ghost btn--full">Request scope</a>
+        </article>
+
+        <article class="tier tier--featured reveal" style="--d:.08s">
+          <div class="tier__badge">Most engaged</div>
+          <header class="tier__head">
+            <h3>Standard</h3>
+            <p>For full manuscript-track studies</p>
+          </header>
+          <div class="tier__price">
+            <span class="tier__from">From</span>
+            <span class="tier__amt">$$$</span>
+            <span class="tier__per">per engagement</span>
+          </div>
+          <ul class="tier__list">
+            <li>Everything in Essential</li>
+            <li>Multivariable modelling (regression / survival)</li>
+            <li>Subgroup &amp; sensitivity analyses</li>
+            <li>Up to four publication-ready figures</li>
+            <li>Reproducible code repository</li>
+            <li>Two rounds of revisions</li>
+          </ul>
+          <a href="#contact" class="btn btn--primary btn--full">Request scope</a>
+        </article>
+
+        <article class="tier reveal" style="--d:.16s">
+          <header class="tier__head">
+            <h3>Advanced</h3>
+            <p>For systematic reviews &amp; complex designs</p>
+          </header>
+          <div class="tier__price">
+            <span class="tier__from">From</span>
+            <span class="tier__amt">$$$$</span>
+            <span class="tier__per">per engagement</span>
+          </div>
+          <ul class="tier__list">
+            <li>Everything in Standard</li>
+            <li>Meta-analysis with heterogeneity diagnostics</li>
+            <li>Bayesian / mixed-effects modelling</li>
+            <li>Pre-registered protocol &amp; SAP</li>
+            <li>Reviewer-response support, 30 days</li>
+            <li>Unlimited reasonable revisions</li>
+          </ul>
+          <a href="#contact" class="btn btn--ghost btn--full">Request scope</a>
+        </article>
+
+      </div>
+
+      <p class="pricing__note reveal">
+        Pricing brackets indicate relative scope. Final engagement fees are confirmed in writing after the initial consultation. Institutional and multi-project rates are available on request.
+      </p>
+    </section>
+
+    <!-- ============ PORTFOLIO ============ -->
+    <section class="section portfolio" id="portfolio">
+      <div class="section__head">
+        <span class="section__index">05</span>
+        <h2 class="section__title"><span class="serif">Selected</span> <span class="italic">engagements.</span></h2>
+        <p class="section__sub">Illustrative case studies. Identifying details have been altered to preserve client confidentiality.</p>
+      </div>
+
+      <div class="portfolio__list">
+
+        <article class="case reveal">
+          <div class="case__tag">Cardiology &middot; Retrospective cohort</div>
+          <h3>Predictors of 30-day readmission following acute coronary syndrome</h3>
+          <p>Cleaned a 4,200-record registry, fit a multivariable logistic model with backward selection, and validated discrimination via bootstrap. Manuscript accepted to a Q1 cardiology journal on first revision.</p>
+          <div class="case__stack">
+            <span>R</span><span>tidyverse</span><span>rms</span>
+          </div>
+        </article>
+
+        <article class="case reveal" style="--d:.07s">
+          <div class="case__tag">Oncology &middot; Meta-analysis</div>
+          <h3>Immunotherapy outcomes in advanced non-small-cell lung carcinoma</h3>
+          <p>Registered protocol on PROSPERO, screened 3,118 records, and synthesised 27 trials using random-effects meta-analysis with subgroup and meta-regression for biomarker status.</p>
+          <div class="case__stack">
+            <span>PRISMA 2020</span><span>Rayyan</span><span>R / metafor</span>
+          </div>
+        </article>
+
+        <article class="case reveal" style="--d:.14s">
+          <div class="case__tag">Endocrinology &middot; Doctoral thesis</div>
+          <h3>Glycaemic variability and microvascular outcomes in type 2 diabetes</h3>
+          <p>Designed the analytic plan, executed mixed-effects modelling on longitudinal CGM data, and prepared the methodology and results chapters for a successful doctoral defence.</p>
+          <div class="case__stack">
+            <span>R / lme4</span><span>SPSS</span><span>Quarto</span>
+          </div>
+        </article>
+
+        <article class="case reveal" style="--d:.21s">
+          <div class="case__tag">Public health &middot; RCT</div>
+          <h3>Community-based hypertension screening in primary care</h3>
+          <p>Sample-size justification, cluster-randomised allocation, and intention-to-treat analysis with a CONSORT flow diagram. Led the statistical reviewer-response across two revision rounds.</p>
+          <div class="case__stack">
+            <span>R</span><span>CONSORT</span><span>Stata</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="section testimonials">
+      <div class="section__head">
+        <span class="section__index">06</span>
+        <h2 class="section__title"><span class="serif">In the words</span> <span class="italic">of our collaborators.</span></h2>
+      </div>
+
+      <div class="testimonials__grid">
+
+        <figure class="quote reveal">
+          <blockquote>
+            <p>The methodology section returned by Meridian was the cleanest our committee had reviewed all year. Their pre-specified analysis plan made the statistical defence straightforward.</p>
+          </blockquote>
+          <figcaption>
+            <span class="quote__name">Doctoral candidate, Internal Medicine</span>
+            <span class="quote__meta">Riyadh, Saudi Arabia</span>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal" style="--d:.08s">
+          <blockquote>
+            <p>We submitted to a Q1 journal expecting a methodological grilling. The reviewers had two minor comments. The reproducible code repository they delivered was a decisive factor.</p>
+          </blockquote>
+          <figcaption>
+            <span class="quote__name">Consultant Cardiologist, Research Lead</span>
+            <span class="quote__meta">Tertiary hospital, GCC</span>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal" style="--d:.16s">
+          <blockquote>
+            <p>What sets Meridian apart is not only the analysis, but the written interpretation. Every output arrived with a clinician-readable explanation we could place directly in the manuscript.</p>
+          </blockquote>
+          <figcaption>
+            <span class="quote__name">Medical Resident, Family Medicine</span>
+            <span class="quote__meta">Jeddah, Saudi Arabia</span>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal" style="--d:.24s">
+          <blockquote>
+            <p>Confidentiality, punctuality, and statistical depth &mdash; rare to find together. We have engaged Meridian on three consecutive multi-centre studies and intend to continue.</p>
+          </blockquote>
+          <figcaption>
+            <span class="quote__name">Principal Investigator, Oncology</span>
+            <span class="quote__meta">Academic medical centre</span>
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section faq" id="faq">
+      <div class="section__head">
+        <span class="section__index">07</span>
+        <h2 class="section__title"><span class="serif">Frequently</span> <span class="italic">asked.</span></h2>
+      </div>
+
+      <div class="faq__list">
+
+        <details class="faq__item reveal">
+          <summary>
+            <span>What is your typical turnaround time?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>Most Essential engagements are delivered within 5 business days. Standard engagements typically run 10&ndash;14 days, and systematic reviews are scoped individually given their iterative nature. Expedited timelines are accommodated where capacity allows.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal" style="--d:.05s">
+          <summary>
+            <span>How is data confidentiality handled?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>All data is transferred over encrypted channels and stored on access-controlled, jurisdiction-appropriate infrastructure. Mutual NDAs are issued on request, and identifiable data is processed under explicit data-handling agreements. Our default is to work with de-identified datasets.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal" style="--d:.1s">
+          <summary>
+            <span>Which statistical methods do you support?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>The full standard repertoire &mdash; descriptive and bivariate inference, generalised linear models, survival analysis (Kaplan-Meier, Cox, competing risks), mixed-effects and longitudinal models, propensity-score methods, meta-analysis with heterogeneity diagnostics, and Bayesian regression. We routinely use R, SPSS, Python, and Stata.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal" style="--d:.15s">
+          <summary>
+            <span>What is your revisions policy?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>Essential engagements include one revision round; Standard includes two; Advanced includes unlimited reasonable revisions within the agreed scope. Reviewer-response support is included for 30 days after final delivery on Advanced engagements and is available as an add-on on others.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal" style="--d:.2s">
+          <summary>
+            <span>Do you provide co-authorship?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>We follow ICMJE authorship guidelines. When our intellectual contribution to study design and analysis meets ICMJE criteria, co-authorship is appropriate and discussed in advance. Otherwise, we are pleased to be acknowledged in the appropriate section of the manuscript.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal" style="--d:.25s">
+          <summary>
+            <span>Can you support an active manuscript revision?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>Yes. We routinely take on reviewer-response engagements, including additional analyses, methodological clarifications, and rebuttal drafting. Share the reviewer comments and current manuscript and we will return a scoped proposal within one business day.</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact">
+      <div class="contact__inner">
+
+        <div class="contact__intro">
+          <span class="section__index">08</span>
+          <h2 class="section__title">
+            <span class="serif">Begin</span> <span class="italic">a conversation.</span>
+          </h2>
+          <p>Tell us about your study. You will hear from a senior statistician, not a sales team, within one business day.</p>
+
+          <ul class="contact__meta">
+            <li>
+              <span class="contact__label">Direct</span>
+              <a href="mailto:engagements@meridianbiostat.com">engagements@meridianbiostat.com</a>
+            </li>
+            <li>
+              <span class="contact__label">Hours</span>
+              <span>Sunday &ndash; Thursday &middot; 09:00 &ndash; 18:00 AST</span>
+            </li>
+            <li>
+              <span class="contact__label">Headquartered</span>
+              <span>Jeddah &middot; serving clients globally</span>
+            </li>
+          </ul>
+
+          <a href="#" class="contact__whatsapp" aria-label="Contact via WhatsApp (placeholder)">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+              <path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.4c1.4.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.1.8.8-3-.2-.3C3.9 14.9 3.5 13.5 3.5 12c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5-3.8 8-8.5 8z"/>
+            </svg>
+            <span>WhatsApp <em>(by appointment)</em></span>
+          </a>
+        </div>
+
+        <form class="contact__form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" required autocomplete="name" placeholder="Dr. Layla Al-Harbi" />
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@institution.edu" />
+          </div>
+
+          <div class="field">
+            <label for="role">Role <span class="optional">(optional)</span></label>
+            <select id="role" name="role">
+              <option value="">Select&hellip;</option>
+              <option>Resident</option>
+              <option>Consultant / Attending</option>
+              <option>Faculty / Researcher</option>
+              <option>Postgraduate student</option>
+              <option>Industry / Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Project brief</label>
+            <textarea id="message" name="message" rows="5" required placeholder="A short description of your research question, data, and timeline."></textarea>
+          </div>
+
+          <div class="field field--check">
+            <input type="checkbox" id="nda" name="nda" />
+            <label for="nda">Please send a mutual NDA before I share details.</label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--full">
+            Send brief
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <p class="form__note" id="formNote" aria-live="polite"></p>
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <svg class="logo logo--lg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M6 24 L14 16 L20 22 L26 12 L34 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="20" cy="22" r="1.6" fill="currentColor"/>
+        </svg>
+        <h3>Meridian Biostatistics</h3>
+        <p>Precision in evidence. Rigour in every figure.</p>
+      </div>
+
+      <div class="footer__cols">
+        <div>
+          <h4>Practice</h4>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#workflow">Process</a>
+          <a href="#pricing">Engagements</a>
+        </div>
+        <div>
+          <h4>Evidence</h4>
+          <a href="#portfolio">Case studies</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div>
+          <h4>Connect</h4>
+          <a href="#" aria-label="LinkedIn (placeholder)">LinkedIn</a>
+          <a href="#" aria-label="ResearchGate (placeholder)">ResearchGate</a>
+          <a href="#" aria-label="ORCID (placeholder)">ORCID</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; <span id="year"></span> Meridian Biostatistics. All rights reserved.</p>
+      <p class="footer__fineprint">Engagements are confidential. Statistical methods adhere to ICMJE and EQUATOR network guidance.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* =====================================================================
+       MERIDIAN — Animated data background
+       Subtle, academic visualization: drifting data points connected by
+       faint lines, slow sparkline traces, and floating numeric readouts
+       that gently increment and decrement. Statistics in motion.
+       ===================================================================== */
+    (() => {
+      const canvas = document.getElementById('dataCanvas');
+      if (!canvas) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const ctx = canvas.getContext('2d');
+      let W = 0, H = 0;
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      let raf = null;
+
+      const COLORS = {
+        ink:  'rgba(10, 31, 61, ALPHA)',
+        teal: 'rgba(15, 139, 141, ALPHA)',
+        gold: 'rgba(176, 138, 62, ALPHA)',
+        soft: 'rgba(42, 63, 96, ALPHA)',
+      };
+      const c = (k, a = 1) => COLORS[k].replace('ALPHA', a);
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        W = rect.width;
+        H = rect.height;
+        canvas.width  = W * DPR;
+        canvas.height = H * DPR;
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+
+      const particles = [];
+      function seedParticles() {
+        particles.length = 0;
+        const density = Math.min(60, Math.max(28, Math.floor((W * H) / 28000)));
+        for (let i = 0; i < density; i++) {
+          particles.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - .5) * 0.18,
+            vy: (Math.random() - .5) * 0.18,
+            r: Math.random() * 1.4 + 0.6,
+            tone: Math.random() < 0.08 ? 'gold' : (Math.random() < 0.45 ? 'teal' : 'ink'),
+          });
+        }
+      }
+
+      const sparklines = [];
+      function makeSpark(i, total) {
+        const lane = H / (total + 1);
+        return {
+          x: -50 + Math.random() * 200,
+          y: lane * (i + 1) + (Math.random() - .5) * 80,
+          w: 220 + Math.random() * 80,
+          h: 36,
+          points: Array.from({ length: 28 }, () => Math.random()),
+          speed: 0.12 + Math.random() * 0.08,
+          tone: i % 2 === 0 ? 'teal' : 'ink',
+        };
+      }
+      function seedSparklines() {
+        sparklines.length = 0;
+        for (let i = 0; i < 3; i++) sparklines.push(makeSpark(i, 3));
+      }
+
+      const readouts = [];
+      function seedReadouts() {
+        readouts.length = 0;
+        const labels = [
+          { label: 'p',  min: 0.001, max: 0.049, decimals: 3, prefix: 'p = ' },
+          { label: 'OR', min: 0.62,  max: 1.94,  decimals: 2, prefix: 'OR ' },
+          { label: 'r',  min: 0.31,  max: 0.86,  decimals: 2, prefix: 'r = ' },
+          { label: 'CI', min: 0.78,  max: 0.99,  decimals: 2, prefix: 'CI ' },
+          { label: 'b',  min: 0.12,  max: 0.74,  decimals: 2, prefix: '\u03B2 = ' },
+          { label: 'HR', min: 0.55,  max: 1.42,  decimals: 2, prefix: 'HR ' },
+          { label: 'n',  min: 120,   max: 4400,  decimals: 0, prefix: 'n = ' },
+          { label: 'I2', min: 12,    max: 78,    decimals: 0, prefix: 'I\u00B2 = ', suffix: '%' },
+        ];
+        const count = Math.min(7, Math.max(4, Math.floor(W / 240)));
+        const used = new Set();
+        for (let i = 0; i < count; i++) {
+          let pick;
+          do { pick = labels[Math.floor(Math.random() * labels.length)]; }
+          while (used.has(pick.label) && used.size < labels.length);
+          used.add(pick.label);
+
+          readouts.push({
+            ...pick,
+            x: Math.random() * (W - 120) + 30,
+            y: Math.random() * (H - 80) + 40,
+            vx: (Math.random() - .5) * 0.08,
+            vy: (Math.random() - .5) * 0.06,
+            value: pick.min + Math.random() * (pick.max - pick.min),
+            target: pick.min + Math.random() * (pick.max - pick.min),
+            tween: 0,
+            tweenDur: 120 + Math.random() * 200,
+            opacity: 0,
+            opacityTarget: 0.55 + Math.random() * 0.25,
+            life: 0,
+            maxLife: 600 + Math.random() * 500,
+          });
+        }
+      }
+
+      let frame = 0;
+      function tick() {
+        frame++;
+        ctx.clearRect(0, 0, W, H);
+        drawGrid();
+        sparklines.forEach(s => {
+          s.x += s.speed;
+          if (s.x > W + 80) {
+            const fresh = makeSpark(0, 3);
+            Object.assign(s, fresh);
+            s.x = -s.w - 20;
+            s.y = Math.random() * (H - 80) + 40;
+          }
+          drawSpark(s);
+        });
+        particles.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < -10) p.x = W + 10;
+          if (p.x > W + 10) p.x = -10;
+          if (p.y < -10) p.y = H + 10;
+          if (p.y > H + 10) p.y = -10;
+        });
+        drawConnections();
+        particles.forEach(drawParticle);
+        readouts.forEach(updateReadout);
+        readouts.forEach(drawReadout);
+        raf = requestAnimationFrame(tick);
+      }
+
+      function drawGrid() {
+        const step = 80;
+        ctx.save();
+        ctx.strokeStyle = c('ink', 0.025);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let x = 0; x < W; x += step) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+        for (let y = 0; y < H; y += step) { ctx.moveTo(0, y); ctx.lineTo(W, y); }
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawParticle(p) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = c(p.tone, p.tone === 'gold' ? 0.55 : 0.4);
+        ctx.fill();
+      }
+
+      function drawConnections() {
+        const max = 130;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const a = particles[i], b = particles[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const d  = Math.sqrt(dx * dx + dy * dy);
+            if (d < max) {
+              const alpha = (1 - d / max) * 0.18;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.strokeStyle = c('ink', alpha);
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function drawSpark(s) {
+        const { x, y, w, h, points, tone } = s;
+        ctx.save();
+        ctx.strokeStyle = c(tone, 0.08);
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x, y, w, h);
+        ctx.fillStyle = c(tone, 0.18);
+        for (let i = 0; i < 4; i++) {
+          ctx.fillRect(x + (w / 4) * i, y + h, 1, 3);
+        }
+        ctx.beginPath();
+        points.forEach((v, i) => {
+          const px = x + (i / (points.length - 1)) * w;
+          const py = y + h - v * h * 0.85 - h * 0.075;
+          i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+        });
+        ctx.strokeStyle = c(tone, 0.55);
+        ctx.lineWidth = 1.3;
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        ctx.lineTo(x + w, y + h);
+        ctx.lineTo(x, y + h);
+        ctx.closePath();
+        ctx.fillStyle = c(tone, 0.06);
+        ctx.fill();
+        const last = points[points.length - 1];
+        const cx = x + w;
+        const cy = y + h - last * h * 0.85 - h * 0.075;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = c(tone, 0.7);
+        ctx.fill();
+        if (frame % 30 === 0) {
+          points.shift();
+          points.push(Math.max(0.05, Math.min(0.95, last + (Math.random() - 0.5) * 0.4)));
+        }
+        ctx.restore();
+      }
+
+      function updateReadout(r) {
+        r.life++;
+        if (r.opacity < r.opacityTarget) r.opacity = Math.min(r.opacityTarget, r.opacity + 0.005);
+        r.x += r.vx; r.y += r.vy;
+        if (r.x < 20 || r.x > W - 120) r.vx *= -1;
+        if (r.y < 30 || r.y > H - 30)  r.vy *= -1;
+        r.tween++;
+        if (r.tween >= r.tweenDur) {
+          r.tween = 0;
+          r.tweenDur = 120 + Math.random() * 200;
+          r.target = r.min + Math.random() * (r.max - r.min);
+        }
+        const t = r.tween / r.tweenDur;
+        const eased = t < .5 ? 2*t*t : -1 + (4 - 2*t)*t;
+        r.value = r.value + (r.target - r.value) * eased * 0.04;
+        if (r.life > r.maxLife) {
+          r.opacity = Math.max(0, r.opacity - 0.01);
+          if (r.opacity <= 0.001) {
+            r.life = 0;
+            r.maxLife = 600 + Math.random() * 500;
+            r.x = Math.random() * (W - 120) + 30;
+            r.y = Math.random() * (H - 80) + 40;
+            r.opacityTarget = 0.55 + Math.random() * 0.25;
+          }
+        }
+      }
+
+      function drawReadout(r) {
+        if (r.opacity <= 0.001) return;
+        const text = r.prefix + r.value.toFixed(r.decimals) + (r.suffix || '');
+        ctx.save();
+        ctx.font = '500 11px "JetBrains Mono", ui-monospace, monospace';
+        ctx.textBaseline = 'middle';
+        const metrics = ctx.measureText(text);
+        const padX = 8;
+        const w = metrics.width + padX * 2;
+        const h = 22;
+        ctx.fillStyle = c('ink', r.opacity * 0.06);
+        roundRect(ctx, r.x, r.y - h/2, w, h, 3);
+        ctx.fill();
+        ctx.strokeStyle = c('ink', r.opacity * 0.2);
+        ctx.lineWidth = 1;
+        roundRect(ctx, r.x, r.y - h/2, w, h, 3);
+        ctx.stroke();
+        ctx.fillStyle = c('soft', r.opacity);
+        ctx.fillText(text, r.x + padX, r.y);
+        ctx.restore();
+      }
+
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y,     x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x,     y + h, r);
+        ctx.arcTo(x,     y + h, x,     y,     r);
+        ctx.arcTo(x,     y,     x + w, y,     r);
+        ctx.closePath();
+      }
+
+      function init() {
+        resize();
+        seedParticles();
+        seedSparklines();
+        seedReadouts();
+        if (raf) cancelAnimationFrame(raf);
+        tick();
+      }
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(init, 150);
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (raf) { cancelAnimationFrame(raf); raf = null; }
+        } else if (!raf) {
+          tick();
+        }
+      });
+
+      init();
+    })();
+
+    /* =====================================================================
+       MERIDIAN — UI behaviour
+       Sticky nav, mobile menu, scroll reveals, counters, contact form,
+       active-section highlight, footer year.
+       ===================================================================== */
+    (() => {
+      // -------------------- Sticky nav state --------------------
+      const nav = document.getElementById('nav');
+      const onScroll = () => {
+        if (!nav) return;
+        nav.classList.toggle('is-scrolled', window.scrollY > 12);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // -------------------- Mobile menu --------------------
+      const burger = document.getElementById('burger');
+      const menu = document.querySelector('.nav__menu');
+      if (burger && menu) {
+        burger.addEventListener('click', () => {
+          const open = menu.classList.toggle('is-open');
+          burger.setAttribute('aria-expanded', String(open));
+        });
+        menu.addEventListener('click', (e) => {
+          if (e.target.tagName === 'A') {
+            menu.classList.remove('is-open');
+            burger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      // -------------------- Scroll reveals --------------------
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+        reveals.forEach((el) => io.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add('is-in'));
+      }
+
+      // -------------------- Counters --------------------
+      const counters = document.querySelectorAll('[data-count]');
+      const animateCount = (el) => {
+        const target = parseInt(el.dataset.count, 10) || 0;
+        const duration = 1600;
+        const start = performance.now();
+        const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+        const step = (now) => {
+          const elapsed = now - start;
+          const t = Math.min(elapsed / duration, 1);
+          const value = Math.floor(easeOut(t) * target);
+          el.textContent = value.toLocaleString();
+          if (t < 1) requestAnimationFrame(step);
+          else el.textContent = target.toLocaleString();
+        };
+        requestAnimationFrame(step);
+      };
+      if ('IntersectionObserver' in window && counters.length) {
+        const cIO = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCount(entry.target);
+              cIO.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.4 });
+        counters.forEach((el) => cIO.observe(el));
+      } else {
+        counters.forEach(animateCount);
+      }
+
+      // -------------------- Contact form (mock) --------------------
+      const form = document.getElementById('contactForm');
+      const note = document.getElementById('formNote');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = form.name.value.trim();
+          const email = form.email.value.trim();
+          const message = form.message.value.trim();
+          if (!name || !email || !message) {
+            if (note) note.textContent = 'Please complete all required fields.';
+            return;
+          }
+          if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+            if (note) note.textContent = 'Please enter a valid email address.';
+            return;
+          }
+          if (note) note.textContent = 'Thank you. A senior statistician will be in touch within one business day.';
+          form.reset();
+          setTimeout(() => { if (note) note.textContent = ''; }, 8000);
+        });
+      }
+
+      // -------------------- Footer year --------------------
+      const yr = document.getElementById('year');
+      if (yr) yr.textContent = new Date().getFullYear();
+
+      // -------------------- Active section in nav --------------------
+      const sectionIds = ['about', 'services', 'workflow', 'pricing', 'portfolio', 'faq', 'contact'];
+      const navLinks = Array.from(document.querySelectorAll('.nav__menu a'));
+      if ('IntersectionObserver' in window) {
+        const setActive = (id) => {
+          navLinks.forEach((a) => {
+            const isActive = a.getAttribute('href') === '#' + id;
+            a.style.color = isActive ? 'var(--ink)' : '';
+            a.style.fontWeight = isActive ? '500' : '';
+          });
+        };
+        const sIO = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActive(entry.target.id);
+          });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+        sectionIds.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) sIO.observe(el);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
